@@ -1,39 +1,61 @@
 import re
 import pandas as pd
+from datetime import datetime
 
 class AIAuditor:
     def __init__(self):
-        # Pattern for: [TIMESTAMP] ID:XXXX Status:XXXX
-        self.log_pattern = r"\[(?P<timestamp>.*?)\] ID:(?P<shipment_id>\w+) Status:(?P<status>\w+)"
+        # Improved regex to capture Date and Time separately
+        self.log_pattern = r"\[(?P<date>\d{4}-\d{2}-\d{2}) (?P<time>\d{2}:\d{2})\] ID:(?P<shipment_id>\w+) Status:(?P<status>\w+)"
 
     def parse_logs(self, log_data):
-        """Extracts structured data from raw log strings."""
+        """Extracts structured data and flags malformed entries."""
         parsed_entries = []
+        malformed_count = 0
+
         for line in log_data:
             match = re.search(self.log_pattern, line)
             if match:
-                parsed_entries.append(match.groupdict())
+                entry = match.groupdict()
+                parsed_entries.append(entry)
+            else:
+                malformed_count += 1
+                print(f"⚠️ Warning: Skipping malformed log line: {line}")
         
-        return pd.DataFrame(parsed_entries)
+        df = pd.DataFrame(parsed_entries)
+        return df, malformed_count
 
     def audit_compliance(self, df):
-        """Flags shipments that aren't 'Delivered' or 'In-Transit'."""
-        valid_statuses = ['Delivered', 'In-Transit']
-        # Identify anomalies
-        df['compliance_issue'] = ~df['status'].isin(valid_statuses)
+        """
+        Advanced Audit:
+        1. Checks for 'Approved' statuses.
+        2. Flags shipments processed outside of 'Business Hours' (9 AM - 5 PM).
+        """
+        # 1. Status Check
+        valid_statuses = ['Delivered', 'In-Transit', 'Pending']
+        df['status_compliant'] = df['status'].isin(valid_statuses)
+
+        # 2. Time-of-Day Audit (Crucial for logistics oversight)
+        df['hour'] = df['time'].apply(lambda x: int(x.split(':')[0]))
+        df['business_hour_compliant'] = df['hour'].between(9, 17)
+
+        # 3. Overall Compliance Flag
+        df['fully_compliant'] = df['status_compliant'] & df['business_hour_compliant']
+        
         return df
 
 if __name__ == "__main__":
-    # Sample logistics data to test the logic
+    # Test data with a mix of good, bad, and "after-hours" logs
     raw_logs = [
         "[2026-03-25 10:00] ID:SHP123 Status:In-Transit",
-        "[2026-03-25 10:05] ID:SHP456 Status:Delivered",
-        "[2026-03-25 10:10] ID:SHP789 Status:Delayed", # This should be flagged
+        "[2026-03-25 22:30] ID:SHP456 Status:Delivered", # Night-time delivery (Flagged)
+        "[2026-03-25 14:15] ID:SHP789 Status:Unauthorized", # Invalid Status (Flagged)
+        "CORRUPT_DATA_LINE_12345", # Malformed (Flagged)
     ]
 
     auditor = AIAuditor()
-    structured_data = auditor.parse_logs(raw_logs)
-    audit_results = auditor.audit_compliance(structured_data)
-
-    print("--- Audit Results ---")
-    print(audit_results)
+    df, errors = auditor.parse_logs(raw_logs)
+    
+    if not df.empty:
+        results = auditor.audit_compliance(df)
+        print(f"\n--- Audit Summary ({errors} errors bypassed) ---")
+        print(results[['shipment_id', 'status', 'time', 'fully_compliant']])
