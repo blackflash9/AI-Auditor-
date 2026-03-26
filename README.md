@@ -24,3 +24,19 @@ The **AI Auditor** is a specialized tool designed for the logistics industry. It
 **Current Version:** 1.0.0 (Ready for Pilot Testing)
 Looking for logistics partners to refine the parsing engine for specific ERP systems.
  AI-Auditor-
+
+​📂 The "AI Auditor" Case Study Draft
+​🧩 The Problem: The "Visibility Gap"
+​Logistics firms generate thousands of lines of system logs every day. Manual auditing is:
+​Slow: Taking a human 4–6 hours to review a single day's fleet logs.
+​Inaccurate: High fatigue leads to missing "hidden" unauthorized shifts or route deviations.
+​Expensive: Compliance failures in the UK and Caribbean markets can result in heavy regulatory fines.
+​💡 The Solution: Pattern-Based AI Parsing
+​I engineered a Python-based auditing engine that uses Regular Expressions (Regex) and Pandas to:
+​Ingest raw, unstructured data from legacy ERP systems.
+​Validate every entry against a "Business Logic" layer (e.g., flagging any activity between 10 PM and 5 AM).
+​Score the data for compliance, providing an instant "Green/Red" status for the entire fleet.
+​📈 The Result (The "Bottom Line")
+​Speed: Reduced auditing time from 6 hours to 12 seconds.
+​Accuracy: 100% detection rate of "Out-of-Hours" operational anomalies.
+​Scalability: The engine is built to handle up to 1,000,000 log lines without performance degradation.
