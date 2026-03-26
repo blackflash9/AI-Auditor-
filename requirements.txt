@@ -1,0 +1,10 @@
+# Data Manipulation
+pandas==2.2.0
+numpy==1.26.0
+
+# Regex & Logging (Standard library, but good to note)
+# Machine Learning / Anomaly Detection
+scikit-learn==1.4.0
+
+# Reporting & Exporting
+openpyxl==3.1.2
