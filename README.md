@@ -29,27 +29,39 @@ The **AI Logistics Auditor** is a robust SaaS solution designed to automate the 
   <img src="https://img.shields.io/badge/language-Python_3.10+-blue?style=flat-square&logo=python" alt="Python" />
   <img src="https://img.shields.io/badge/AI/ML-OpenAI_%7C_Anthropic-black?style=flat-square&logo=openai" alt="AI Stack" />
   <img src="https://img.shields.io/badge/architecture-Modular_SaaS-lightgrey?style=flat-square" alt="Architecture" />
-  <img src="https://img.shields.io/badge/Infrastructure-GitHub_Codespaces_%7C_Replit-6E5494?style=flat-square&logo=github" alt="Dev Tools" />
+  <img src="https://img.shields.io/badge/Dev_Tools-GitHub_Codespaces-6E5494?style=flat-square&logo=github" alt="Dev Tools" />
 </p>
 
 ---
 
-## <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/gears.svg" width="22" height="22" align="center" alt="Execution" /> Core Engineering Logic
+## <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/house-user.svg" width="22" height="22" align="center" alt="Local Setup" /> Local Setup & Installation
 
-The system utilizes an asynchronous pipeline to ensure high throughput for enterprise-level document batches.
+For firms wishing to review the code locally or run security/performance audits:
 
-```python
-import asyncio
-from typing import Dict
+### 1. Clone the Repository
+```bash
+git clone [https://github.com/blackflash9/AI-Auditor-.git](https://github.com/blackflash9/AI-Auditor-.git)
+cd AI-Auditor-
 
-class AuditorEngine:
-    """
-    Asynchronous RAG Pipeline for Logistics Compliance.
-    Architected for high-concurrency and sub-500ms latency.
-    """
-    async def process_manifest(self, doc_id: str) -> Dict:
-        # 1. Semantic Content Extraction
-        # 2. Vector Search against Trade Law DB
-        # 3. LLM Audit Synthesis (GPT-4o / Claude 3.5)
-        # 4. Telemetry Logging
-        pass
+### 2. Environment Provisioning
+```bash
+python3 -m venv venv
+source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+pip install -r requirements.txt
+
+### 3. Execution (Standard Audit)
+```bash
+# Run the auditor in diagnostic mode
+python main.py --mode audit --telemetry enabled
+
+## <img src="https://www.google.com/search?q=https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/trophy.svg" width="22" height="22" align="center" alt="Architect" /> Lead Architect
+​Almando Douglas Lead AI Solutions Architect | 3-Time Grammy Nominee | 1-Time Grammy Winner
+​<p align="left">
+<a href="https://www.google.com/search?q=https://github.com/blackflash9">
+<img src="https://www.google.com/search?q=https://img.shields.io/badge/GitHub-Profile-lightgrey%3Fstyle%3Dfor-the-badge%26logo%3Dgithub" alt="GitHub" />
+</a>
+<a href="https://www.google.com/search?q=https://www.linkedin.com/in/almando-douglas/">
+<img src="https://www.google.com/search?q=https://img.shields.io/badge/LinkedIn-Contact-blue%3Fstyle%3Dfor-the-badge%26logo%3Dlinkedin" alt="LinkedIn" />
+</a>
+</p>
+​"I build AI systems with the same rhythmic precision I use to craft a Grammy-winning record. Where technical architecture meets creative intuition."
