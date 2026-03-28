@@ -50,7 +50,7 @@ source venv/bin/activate  # On Windows use `venv\Scripts\activate`
 pip install -r requirements.txt
 
 3. Execution (Standard Audit)
-```
+
 # Run the auditor in diagnostic mode
 python main.py --mode audit --telemetry enabled
 
