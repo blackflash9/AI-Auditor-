@@ -57,33 +57,3 @@ class AuditorEngine:
 if __name__ == "__main__":
     engine = AuditorEngine()
     asyncio.run(engine.run_audit("Audit London-Kingston Logistics Route"))
-
-🌍 Deployment: London Industry Standards
-​To cater to high-end London-based firms (FinTech, LegalTech, and Logistics), the setup must emphasize Virtual Environments, Secret Management, and Production Readiness.
-​1. Environment Provisioning
-​London firms prioritize clean, reproducible environments. Use venv or conda to ensure zero dependency conflicts.
-
-# Initialize high-performance environment
-python3 -m venv .london_env
-source .london_env/bin/activate
-
-# Install Core Engine + Telemetry Suite
-pip install -r requirements.txt
-
-2. Secure Configuration
-​Never hardcode credentials. Senior engineers use .env files for secure API orchestration.
-
-# Create local configuration
-touch .env
-echo "OPENAI_API_KEY=your_secure_key_here" >> .env
-echo "PINECONE_ENV=london-aws-region" >> .env
-
-3. Execution (The Local "Soundcheck")
-​Run the system using the provided CLI interface to verify the RAG pipeline's integrity.
-
-# Execute local diagnostic audit
-python main.py --mode production --telemetry enabled
-
-🏆 The Professional Signature
-​"Engineering AI with the same precision I use to craft a Grammy-winning record. Where technical architecture meets creative intuition."
-— Almando Douglas
