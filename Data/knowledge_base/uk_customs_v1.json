@@ -1,0 +1,16 @@
+[
+  {
+    "hs_code": "7605 11 00 00",
+    "description": "Aluminum wire, not alloyed, maximum cross-sectional dimension > 7mm",
+    "duty_rate": "7.5%",
+    "regulation_reference": "UK Trade Tariff: Section XV, Chapter 76",
+    "compliance_note": "Requires Certificate of Origin if imported from non-commonwealth nations."
+  },
+  {
+    "hs_code": "8517 13 00 00",
+    "description": "Smartphones and other wireless network telephones",
+    "duty_rate": "0.0%",
+    "regulation_reference": "UK Trade Tariff: Section XVI, Chapter 85",
+    "compliance_node": "Zero-rated; subject to standard 20% Import VAT."
+  }
+]
