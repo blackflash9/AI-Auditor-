@@ -40,3 +40,30 @@ The **AI Logistics Auditor** is a robust SaaS solution designed to automate the 
 ```bash
 git clone [https://github.com/blackflash9/AI-Auditor-.git](https://github.com/blackflash9/AI-Auditor-.git)
 cd AI-Auditor-
+
+2. Environment Provisioning
+
+
+python3 -m venv venv
+# On Windows use `venv\Scripts\activate`
+source venv/bin/activate  
+pip install -r requirements.txt
+
+
+3. Execution (Standard Audit)
+
+# Run the auditor in diagnostic mode
+python main.py --mode audit --telemetry enabled
+
+```
+<img src="https://www.google.com/search?q=https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/trophy.svg" width="22" height="22" align="center" alt="Architect" /> Lead Architect
+​Almando Douglas AI Solutions Architect | 3-Time Grammy Nominee | 1-Time Grammy Winner
+​<p align="left">
+<a href="https://www.google.com/search?q=https://github.com/blackflash9">
+<img src="https://www.google.com/search?q=https://img.shields.io/badge/GitHub-Profile-lightgrey%3Fstyle%3Dfor-the-badge%26logo%3Dgithub" alt="GitHub" />
+</a>
+<a href="https://www.google.com/search?q=https://www.linkedin.com/in/almando-douglas/">
+<img src="https://www.google.com/search?q=https://img.shields.io/badge/LinkedIn-Contact-blue%3Fstyle%3Dfor-the-badge%26logo%3Dlinkedin" alt="LinkedIn" />
+</a>
+</p>
+​"I build AI systems with the same rhythmic precision I use to craft a Grammy-winning record. Where technical architecture meets creative intuition."
