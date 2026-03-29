@@ -1,10 +1,11 @@
-# Data Manipulation
-pandas==2.2.0
-numpy==1.26.0
+# Data Processing
+pandas>=2.0.0
+openpyxl>=3.1.0
 
-# Regex & Logging (Standard library, but good to note)
-# Machine Learning / Anomaly Detection
-scikit-learn==1.4.0
+# Document Extraction
+PyPDF2>=3.0.0
 
-# Reporting & Exporting
-openpyxl==3.1.2
+# Future AI/LLM Integration (Optional but recommended)
+openai>=1.0.0
+python-dotenv>=1.0.0
+
