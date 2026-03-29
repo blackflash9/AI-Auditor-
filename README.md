@@ -82,3 +82,11 @@ graph TD
     class PDF,Clean,VectorDB,BM25,FinalReport storage;
     class Parser,Reranker,Decision process;
     class Orchestrator,DraftAgent,VerifyAgent agent;
+
+### 🛠️ Technical Implementation
+
+Component Technology Engineering Decision
+Logic Layer LangGraph Chosen over linear chains to support cyclic logic and human-in-the-loop triggers.
+Embedding Model OpenAI text-embedding-3-large 3072 dimensions to capture the nuance of legal and technical trade jargon.
+Re-ranking Cohere Rerank v3 Applied post-retrieval to optimize the top-k context before LLM injection.
+Observability LangSmith Used for tracing agent trajectories and monitoring per-token costs.
