@@ -2,17 +2,25 @@
 
 ---
 
-### <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/bolt.svg" width="18" height="18" align="center" alt="Bolt" /> AI-powered Compliance for International Trade
+### <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/bolt.svg" width="18" height="18" align="center" alt="Bolt" /> Enterprise-Grade Compliance for Global Trade
 <p align="left">
   <img src="https://img.shields.io/badge/Status-Production--Ready-success?style=for-the-badge&logo=github" alt="Status: Production-Ready" />
   <img src="https://img.shields.io/badge/Stack-Python_%7C_LangGraph_%7C_RAG-3776AB?style=for-the-badge&logo=python" alt="Stack" />
   <img src="https://img.shields.io/badge/Location-Kingston_%2F_London-purple?style=for-the-badge&logo=googlemaps" alt="Location: London May 2026" />
+  <img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge" alt="License" />
 </p>
 
 ---
 
 ## <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/eye.svg" width="22" height="22" align="center" alt="Overview" /> Project Overview
-The **AI Logistics Auditor** is a robust solution designed to automate the costly and error-prone process of auditing international shipping manifests and customs documentation. By utilizing cutting-edge Large Language Models (LLMs) and **Agentic RAG workflows**, it provides real-time validation, ensures regulatory compliance, and accelerates operational speed.
+The **AI Logistics Auditor** is a sophisticated **Multi-Agent RAG system** designed to solve the $100B problem of manual customs non-compliance. Unlike simple chatbot interfaces, this system functions as an **Autonomous Auditor**—parsing complex shipping manifests, cross-referencing global trade regulations, and self-correcting its findings through an iterative agentic loop.
+
+### 🌟 Key Differentiators (Why this stands out)
+* **Agentic Self-Correction:** Uses a LangGraph-managed feedback loop where a **Verification Agent** critiques the **Drafting Agent**, drastically reducing hallucinations in HS Code matching.
+* **Hybrid Retrieval Logic:** Combines Dense Vector Search (semantic) with Sparse BM25 (keyword) and a Cross-Encoder Reranker to ensure high-precision regulatory lookups.
+* **Layout-Aware Ingestion:** Custom parsing pipeline specifically tuned for nested tables and multi-page logistics PDFs—data that breaks standard OCR.
+
+---
 
 ### 🏗️ System Architecture (Agentic RAG)
 
@@ -74,5 +82,3 @@ graph TD
     class PDF,Clean,VectorDB,BM25,FinalReport storage;
     class Parser,Reranker,Decision process;
     class Orchestrator,DraftAgent,VerifyAgent agent;
-
-
