@@ -2,91 +2,69 @@
 
 ---
 
-### <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/bolt.svg" width="18" height="18" align="center" alt="Bolt" /> Enterprise-Grade Compliance for Global Trade
+### <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/bolt.svg" width="18" height="18" align="center" alt="Bolt" /> AI-powered Compliance for International Trade
 <p align="left">
-  <img src="https://img.shields.io/badge/Status-Production--Ready-success?style=for-the-badge&logo=github" alt="Status: Production-Ready" />
-  <img src="https://img.shields.io/badge/Stack-Python_%7C_LangGraph_%7C_RAG-3776AB?style=for-the-badge&logo=python" alt="Stack" />
+  <img src="https://img.shields.io/badge/Status-MVP-success?style=for-the-badge&logo=github" alt="Status: MVP" />
+  <img src="https://img.shields.io/badge/Tech_Stack-Python_%7C_AI-blue?style=for-the-badge" alt="Tech Stack" />
   <img src="https://img.shields.io/badge/Location-Kingston_%2F_London-purple?style=for-the-badge&logo=googlemaps" alt="Location: London May 2026" />
-  <img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge" alt="License" />
 </p>
 
 ---
 
 ## <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/eye.svg" width="22" height="22" align="center" alt="Overview" /> Project Overview
-The **AI Logistics Auditor** is a sophisticated **Multi-Agent RAG system** designed to solve the $100B problem of manual customs non-compliance. Unlike simple chatbot interfaces, this system functions as an **Autonomous Auditor**—parsing complex shipping manifests, cross-referencing global trade regulations, and self-correcting its findings through an iterative agentic loop.
+The **AI Logistics Auditor** is a robust SaaS solution designed to automate the costly and error-prone process of auditing international shipping manifests and customs documentation. By utilizing cutting-edge Large Language Models (LLMs) via Python, it provides real-time validation, ensures regulatory compliance, and accelerates operational speed.
 
-### 🌟 Key Differentiators (Why this stands out)
-* **Agentic Self-Correction:** Uses a LangGraph-managed feedback loop where a **Verification Agent** critiques the **Drafting Agent**, drastically reducing hallucinations in HS Code matching.
-* **Hybrid Retrieval Logic:** Combines Dense Vector Search (semantic) with Sparse BM25 (keyword) and a Cross-Encoder Reranker to ensure high-precision regulatory lookups.
-* **Layout-Aware Ingestion:** Custom parsing pipeline specifically tuned for nested tables and multi-page logistics PDFs—data that breaks standard OCR.
+## <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/star.svg" width="22" height="22" align="center" alt="Features" /> Key Features & Capabilities
+
+* <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/check-double.svg" width="16" height="16" align="center" alt="Verification" /> **Automated Doc Verification:** Instant extraction and auditing of data from invoices, packing lists, and manifests.
+* <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/network-wired.svg" width="16" height="16" align="center" alt="Network" /> **Multi-Model Orchestration:** Uses dynamic API switching between **OpenAI GPT-4o** and **Anthropic Claude 3.5** for optimal reasoning accuracy.
+* <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/shield-halved.svg" width="16" height="16" align="center" alt="Shield" /> **Global Regulatory Compliance:** Compares shipping data against current international trade laws to flag immediate risks.
+* <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/chart-line.svg" width="16" height="16" align="center" alt="Chart" /> **Operational Metrics:** Early-stage analysis shows a **~60% reduction** in manual document auditing time.
 
 ---
 
-### 🏗️ System Architecture (Agentic RAG)
+## <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/layer-group.svg" width="22" height="22" align="center" alt="Tech" /> Technology Stack
 
-```mermaid
-graph TD
-    %% Define Node Styles
-    classDef storage fill:#f9f,stroke:#333,stroke-width:2px;
-    classDef process fill:#e1f5fe,stroke:#01579b,stroke-width:1px,rx:10,ry:10;
-    classDef agent fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px,rx:15,ry:15;
-    classDef error fill:#ffebee,stroke:#b71c1c,stroke-width:1px,stroke-dasharray: 5 5;
+<p align="left">
+  <img src="https://img.shields.io/badge/language-Python_3.10+-blue?style=flat-square&logo=python" alt="Python" />
+  <img src="https://img.shields.io/badge/AI/ML-OpenAI_%7C_Anthropic-black?style=flat-square&logo=openai" alt="AI Stack" />
+  <img src="https://img.shields.io/badge/architecture-Modular_SaaS-lightgrey?style=flat-square" alt="Architecture" />
+  <img src="https://img.shields.io/badge/Dev_Tools-GitHub_Codespaces-6E5494?style=flat-square&logo=github" alt="Dev Tools" />
+</p>
 
-    %% 1. Input Layer
-    subgraph Data_Ingestion ["1. Input Layer"]
-        PDF[("📜 Logistics PDF<br>(Manifest/Customs Doc)")]
-        Parser["🛠️ Layout-Aware Parser<br>(Extracts Tables & OCR)"]
-        Clean[("🧹 Clean Markdown")]
-        PDF --> Parser
-        Parser --> Clean
-    end
+---
 
-    %% 2. Agentic Core
-    subgraph Agent_Core ["2. Agentic Core (LangGraph)"]
-        Orchestrator{{"🤖 Orchestrator<br>(State Management)"}}
-        DraftAgent[/"📝 Drafting Agent"/]
-        VerifyAgent[/"🕵️ Verification Agent"/]
-        
-        Orchestrator --> DraftAgent
-        DraftAgent --> Orchestrator
-        Orchestrator --> VerifyAgent
-    end
+## <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/house-user.svg" width="22" height="22" align="center" alt="Local Setup" /> Local Setup & Installation
 
-    %% 3. Retrieval
-    subgraph Knowledge_Layer ["3. Hybrid Retrieval"]
-        VectorDB[("🗄️ Vector Store<br>(Regulations)")]
-        BM25[("🗂️ Keyword Index<br>(HS Codes)")]
-        Reranker["⚖️ Cross-Encoder Reranker"]
-        
-        Orchestrator -.-> VectorDB
-        Orchestrator -.-> BM25
-        VectorDB --> Reranker
-        BM25 --> Reranker
-        Reranker -.-> Orchestrator
-    end
+For firms wishing to review the code locally or run security/performance audits:
 
-    %% 4. Output
-    subgraph Output_Layer ["4. Verification & Output"]
-        Decision{"🔄 Audit Status?"}
-        FinalReport[("✅ Verified Audit Report")]
-        HumanReview[/"🚨 Flag for Human Review"/]
-        
-        VerifyAgent --> Decision
-        Decision -->|Pass| FinalReport
-        Decision -->|Fail| Orchestrator
-        Decision -->|Low Confidence| HumanReview
-        
-        class HumanReview error;
-    end
+### 1. Clone the Repository
+```bash
+git clone [https://github.com/blackflash9/AI-Auditor-.git](https://github.com/blackflash9/AI-Auditor-.git)
+cd AI-Auditor-
 
-    class PDF,Clean,VectorDB,BM25,FinalReport storage;
-    class Parser,Reranker,Decision process;
-    class Orchestrator,DraftAgent,VerifyAgent agent;
+2. Environment Provisioning
 
-### 🛠️ Technical Implementation
+python3 -m venv venv
+source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+pip install -r requirements.txt
 
-Component Technology Engineering Decision
-Logic Layer LangGraph Chosen over linear chains to support cyclic logic and human-in-the-loop triggers.
-Embedding Model OpenAI text-embedding-3-large 3072 dimensions to capture the nuance of legal and technical trade jargon.
-Re-ranking Cohere Rerank v3 Applied post-retrieval to optimize the top-k context before LLM injection.
-Observability LangSmith Used for tracing agent trajectories and monitoring per-token costs.
+3. Execution (Standard Audit)
+
+# Run the auditor in diagnostic mode
+python main.py --mode audit --telemetry enabled
+
+```
+## <img src="https://www.google.com/search?q=https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/trophy.svg" width="22" height="22" align="center" alt="Architect" /> Lead Architect
+
+​Almando Douglas Lead AI Solutions Architect | 3-Time Grammy Nominee | 1-Time Grammy Winner
+​<p align="left">
+<a href="https://www.google.com/search?q=https://github.com/blackflash9">
+<img src="https://www.google.com/search?q=https://img.shields.io/badge/GitHub-Profile-lightgrey%3Fstyle%3Dfor-the-badge%26logo%3Dgithub" alt="GitHub" />
+</a>
+<a href="https://www.google.com/search?q=https://www.linkedin.com/in/almando-douglas/">
+<img src="https://www.google.com/search?q=https://img.shields.io/badge/LinkedIn-Contact-blue%3Fstyle%3Dfor-the-badge%26logo%3Dlinkedin" alt="LinkedIn" />
+</a>
+</p>
+
+​"I build AI systems with the same rhythmic precision I use to craft a Grammy-winning record. Where technical architecture meets creative intuition."
