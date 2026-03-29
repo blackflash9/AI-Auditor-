@@ -75,13 +75,4 @@ graph TD
     class Parser,Reranker,Decision process;
     class Orchestrator,DraftAgent,VerifyAgent agent;
 
-# 1. Clone & Setup
-git clone [https://github.com/blackflash9/AI-Auditor-](https://github.com/blackflash9/AI-Auditor-)
-pip install -r requirements.txt
-
-# 2. Configure Environment
-echo "OPENAI_API_KEY=your_key_here" > .env
-
-# 3. Execute Audit
-python main.py --input ./data/sample_manifest.pdf
 
