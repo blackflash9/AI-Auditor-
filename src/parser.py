@@ -1,61 +1,51 @@
-import re
 import pandas as pd
-from datetime import datetime
+import json
+import os
 
-class AIAuditor:
-    def __init__(self):
-        # Improved regex to capture Date and Time separately
-        self.log_pattern = r"\[(?P<date>\d{4}-\d{2}-\d{2}) (?P<time>\d{2}:\d{2})\] ID:(?P<shipment_id>\w+) Status:(?P<status>\w+)"
+class DataParser:
+    def __init__(self, input_source):
+        self.input_source = input_source
+        self.file_ext = os.path.splitext(input_source)[1].lower()
 
-    def parse_logs(self, log_data):
-        """Extracts structured data and flags malformed entries."""
-        parsed_entries = []
-        malformed_count = 0
-
-        for line in log_data:
-            match = re.search(self.log_pattern, line)
-            if match:
-                entry = match.groupdict()
-                parsed_entries.append(entry)
+    def parse(self):
+        """Main entry point to convert raw files into structured dictionaries."""
+        try:
+            if self.file_ext == '.csv':
+                data = pd.read_csv(self.input_source)
+            elif self.file_ext in ['.xlsx', '.xls']:
+                data = pd.read_excel(self.input_source)
+            elif self.file_ext == '.json':
+                with open(self.input_source, 'r') as f:
+                    data = pd.DataFrame(json.load(f))
             else:
-                malformed_count += 1
-                print(f"⚠️ Warning: Skipping malformed log line: {line}")
-        
-        df = pd.DataFrame(parsed_entries)
-        return df, malformed_count
+                return {"error": f"Unsupported extension: {self.file_ext}"}
+            
+            return self._clean_and_validate(data)
+            
+        except Exception as e:
+            return {"error": f"Parsing failed: {str(e)}"}
 
-    def audit_compliance(self, df):
+    def _clean_and_validate(self, df):
         """
-        Advanced Audit:
-        1. Checks for 'Approved' statuses.
-        2. Flags shipments processed outside of 'Business Hours' (9 AM - 5 PM).
+        Standardizes the dataset for the AI Logistics Auditor.
         """
-        # 1. Status Check
-        valid_statuses = ['Delivered', 'In-Transit', 'Pending']
-        df['status_compliant'] = df['status'].isin(valid_statuses)
+        # Normalize column headers to lowercase and remove spaces
+        df.columns = [c.strip().lower().replace(" ", "_") for c in df.columns]
 
-        # 2. Time-of-Day Audit (Crucial for logistics oversight)
-        df['hour'] = df['time'].apply(lambda x: int(x.split(':')[0]))
-        df['business_hour_compliant'] = df['hour'].between(9, 17)
+        # Critical mapping for Jamaican/International Customs codes
+        rename_map = {
+            'hs_code': 'tariff_code',
+            'item_description': 'description',
+            'entry_date': 'timestamp'
+        }
+        df.rename(columns=rename_map, inplace=True)
 
-        # 3. Overall Compliance Flag
-        df['fully_compliant'] = df['status_compliant'] & df['business_hour_compliant']
-        
-        return df
+        # Drop rows that are missing essential audit data
+        essential_cols = ['tariff_code', 'timestamp']
+        df.dropna(subset=[col for col in essential_cols if col in df.columns], inplace=True)
 
-if __name__ == "__main__":
-    # Test data with a mix of good, bad, and "after-hours" logs
-    raw_logs = [
-        "[2026-03-25 10:00] ID:SHP123 Status:In-Transit",
-        "[2026-03-25 22:30] ID:SHP456 Status:Delivered", # Night-time delivery (Flagged)
-        "[2026-03-25 14:15] ID:SHP789 Status:Unauthorized", # Invalid Status (Flagged)
-        "CORRUPT_DATA_LINE_12345", # Malformed (Flagged)
-    ]
+        return df.to_dict(orient='records')
 
-    auditor = AIAuditor()
-    df, errors = auditor.parse_logs(raw_logs)
-    
-    if not df.empty:
-        results = auditor.audit_compliance(df)
-        print(f"\n--- Audit Summary ({errors} errors bypassed) ---")
-        print(results[['shipment_id', 'status', 'time', 'fully_compliant']])
+# Example run:
+# parser = DataParser('docs/manifest_march.csv')
+# clean_data = parser.parse()
