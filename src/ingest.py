@@ -1,42 +1,35 @@
-import json
 import os
-from langchain_community.vectorstores import FAISS
-from langchain_openai import OpenAIEmbeddings
-from langchain_core.documents import Document
+import shutil
+import time
 
-def ingest_customs_data(json_path):
-    """
-    Converts UK Customs JSON into a searchable Vector Index.
-    """
-    # 1. Load the "Gold Set"
-    with open(json_path, 'r') as f:
-        data = json.load(f)
-    
-    documents = []
-    
-    # 2. Transform JSON entries into searchable 'Documents'
-    for entry in data:
-        # We put the HS Code and Description in the page_content for searching
-        content = f"HS Code: {entry['hs_code']} | Description: {entry['description']}"
+class DataIngestor:
+    def __init__(self, watch_dir="data/incoming", processed_dir="data/processed"):
+        self.watch_dir = watch_dir
+        self.processed_dir = processed_dir
         
-        # We keep the metadata (rates, refs) for the Agent to use in the Audit report
-        metadata = {
-            "hs_code": entry['hs_code'],
-            "duty_rate": entry['duty_rate'],
-            "reference": entry['regulation_reference']
-        }
-        documents.append(Document(page_content=content, metadata=metadata))
-    
-    # 3. Create Embeddings (The 'Rhythmic Precision' of the data)
-    embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
-    
-    # 4. Build and Save the Vector Store locally
-    vector_db = FAISS.from_documents(documents, embeddings)
-    vector_db.save_local("data/knowledge_base/faiss_index")
-    
-    print(f"✅ Ingested {len(documents)} compliance rules into the Vector Store.")
+        # Ensure directories exist
+        for folder in [self.watch_dir, self.processed_dir]:
+            if not os.path.exists(folder):
+                os.makedirs(folder)
 
-if __name__ == "__main__":
-    # Point to the file we just discussed
-    kb_file = os.path.join('data', 'knowledge_base', 'uk_customs_v1.json')
-    ingest_customs_data(kb_file)
+    def fetch_new_files(self):
+        """
+        Scans the incoming folder for any new logistics files.
+        """
+        files = [f for f in os.listdir(self.watch_dir) if os.path.isfile(os.path.join(self.watch_dir, f))]
+        valid_extensions = ('.csv', '.xlsx', '.json')
+        return [f for f in files if f.lower().endswith(valid_extensions)]
+
+    def move_to_processed(self, filename):
+        """
+        Moves a file to the 'processed' folder after the audit is done 
+        to avoid auditing the same file twice.
+        """
+        src = os.path.join(self.watch_dir, filename)
+        dest = os.path.join(self.processed_dir, filename)
+        shutil.move(src, dest)
+        print(f"[Ingest] Moved {filename} to archive.")
+
+# Example Logic:
+# ingestor = DataIngestor()
+# new_shipments = ingestor.fetch_new_files()
